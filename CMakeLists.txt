@@ -301,7 +301,6 @@ if(FLATBUFFERS_INSTALL)
     install(
       TARGETS flatc EXPORT FlatcTargets
       RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-      CONFIGURATIONS Release
     )
 
     install(
@@ -309,7 +308,6 @@ if(FLATBUFFERS_INSTALL)
       FILE FlatcTargets.cmake
       NAMESPACE flatbuffers::
       DESTINATION ${FB_CMAKE_DIR}
-      CONFIGURATIONS Release
     )
   endif()
 
@@ -352,4 +350,10 @@ include(CMake/BuildFlatBuffers.cmake)
 
 if(FLATBUFFERS_PACKAGE_DEBIAN)
     include(CMake/PackageDebian.cmake)
+endif()
+
+if(UNIX)
+  configure_file("${CMAKE_SOURCE_DIR}/flatbuffers.pc.in" "${CMAKE_BINARY_DIR}/flatbuffers.pc" @ONLY)
+  install(FILES "${CMAKE_BINARY_DIR}/flatbuffers.pc"
+      DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
 endif()
