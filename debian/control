@@ -1,0 +1,41 @@
+Source: flatbuffers
+Section: devel
+Priority: optional
+Build-Depends: cmake (>= 2.8), debhelper (>= 9)
+Maintainer: Wook Song <wook16.song@samsung.com>
+Standards-Version: 4.3.0.3
+Homepage: http://google.github.io/flatbuffers/
+Vcs-Browser: https://github.com/wooksong/flatbuffers
+Vcs-Git: https://github.com/wooksong/flatbuffers.git
+
+Package: flatbuffers-compiler
+Architecture: any
+Multi-Arch: foreign
+Depends:
+ ${misc:Depends}, ${shlibs:Depends}
+Description: Memory Efficient Serialization Library
+ FlatBuffers is an efficient cross platform serialization library for C++,
+ C#, C, Go, Java, JavaScript, Lobster, Lua, TypeScript, PHP, Python, and Rust.
+ It was originally created at Google for game development and other
+ performance-critical applications.
+ .
+ This package contains the FlatBuffer compiler, flatc, this is used to
+ generate a C++ header (or Java/C#/Go/Python.. classes) with helper
+ classes to access and construct serialized data.
+
+Package: libflatbuffers-dev
+Section: libdevel
+Architecture: any
+Multi-Arch: same
+Depends:
+ ${misc:Depends}
+Description: Memory Efficient Serialization Library
+ FlatBuffers is an efficient cross platform serialization library for C++,
+ C#, C, Go, Java, JavaScript, Lobster, Lua, TypeScript, PHP, Python, and Rust.
+ It was originally created at Google for game development and other
+ performance-critical applications.
+ .
+ As a development package for flatbuffers, this package contains static
+ libraies, headers, and pkgconfig file.
+
+

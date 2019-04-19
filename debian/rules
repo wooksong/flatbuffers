@@ -1,0 +1,23 @@
+#!/usr/bin/make -f
+
+export DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+export DEB_HOST_ARCH ?= $(shell dpkg-architecture -qDEB_HOST_ARCH)
+export GCC_VERSION ?= $(word 4,$(shell gcc --version | grep gcc))
+export SNAPSHOT_VERSION ?= 1.9.0+git20180821.1f5eae5
+
+%:
+	dh $@ --parallel --buildsystem=cmake --builddirectory=build
+
+override_dh_auto_configure:
+	dh_auto_configure -- \
+		-DVERSION=${SNAPSHOT_VERSION} \
+		-DCMAKE_CXX_COMPILER_ID="GNU" -DCMAKE_CXX_COMPILER_VERSION="${GCC_VERSION}" \
+		-DCMAKE_CXX_STANDARD_COMPUTED_DEFAULT=11 \
+		-DCMAKE_CXX_FLAGS="-Wno-implicit-fallthrough -fexceptions" \
+		-DCMAKE_EXE_LINKER_FLAGS="-lm -ldl"
+
+override_dh_auto_install:
+	(cd build && DESTDIR=$(CURDIR)/debian/tmp ${MAKE} install)
+
+override_dh_auto_clean:
+	rm -rf build
